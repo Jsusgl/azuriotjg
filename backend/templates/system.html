@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzurIoT - Sistema</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">
+                <div class="logo-dot"></div>
+                <h1>AzurIoT</h1>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/" class="nav-link">Hardware</a>
+                <a href="/plugins_view" class="nav-link">Plugins</a>
+                <a href="/system_view" class="nav-link active">Sistema</a>
+            </nav>
+
+            <div class="status-indicator">
+                <span class="blinking-dot"></span> Online
+            </div>
+        </header>
+
+        <main class="dashboard-grid system-grid">
+            <div class="glass-card">
+                <h2>Uso de CPU</h2>
+                <div class="card-content">
+                    <div class="meter-wrapper">
+                        <div class="meter-fill" id="cpu-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="meter-text" id="cpu-text">0%</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Uso de RAM</h2>
+                <div class="card-content">
+                    <div class="meter-wrapper">
+                        <div class="meter-fill" id="ram-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="meter-text" id="ram-text">0%</p>
+                    <p class="meter-subtext" id="ram-detail">0.0GB / 0.0GB</p>
+                </div>
+            </div>
+            
+            <div class="glass-card">
+                <h2>Uso de Disco</h2>
+                <div class="card-content">
+                    <div class="meter-wrapper">
+                        <div class="meter-fill" id="disk-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="meter-text" id="disk-text">0%</p>
+                    <p class="meter-subtext" id="disk-detail">0.0GB / 0.0GB</p>
+                </div>
+            </div>
+            
+            <div class="glass-card log-card">
+                <h2>Información Adicional</h2>
+                <div class="system-info-list" id="sys-info">
+                    <p>Cargando información...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/system.js') }}"></script>
+</body>
+</html>

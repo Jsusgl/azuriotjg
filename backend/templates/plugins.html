@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzurIoT - Plugins</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">
+                <div class="logo-dot"></div>
+                <h1>AzurIoT</h1>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/" class="nav-link">Hardware</a>
+                <a href="/plugins_view" class="nav-link active">Plugins</a>
+                <a href="/system_view" class="nav-link">Sistema</a>
+            </nav>
+
+            <div class="status-indicator">
+                <span class="blinking-dot"></span> Online
+            </div>
+        </header>
+
+        <main class="dashboard-grid" id="plugins-grid">
+            <!-- Dynamic Plugins will be injected here by JS -->
+        </main>
+        
+        <div class="glass-card log-card" style="margin-top: 2rem;">
+            <h2>Registros de Plugins</h2>
+            <div class="log-viewer" id="log-viewer">
+                <p class="log-entry info">[System] Arrancando vista de Plugins...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+</body>
+</html>

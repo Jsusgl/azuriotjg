@@ -1,0 +1,13 @@
+[Unit]
+Description=AzurIoT Middleware Service
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /opt/azuriot/scripts/azuriot-start.sh
+WorkingDirectory=/opt/azuriot/backend
+Restart=always
+RestartSec=5
+User=azuriot
+
+[Install]
+WantedBy=multi-user.target

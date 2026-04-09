@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzurIoT - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">
+                <div class="logo-dot"></div>
+                <h1>AzurIoT</h1>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/" class="nav-link active">Hardware</a>
+                <a href="/plugins_view" class="nav-link">Plugins</a>
+                <a href="/system_view" class="nav-link">Sistema</a>
+            </nav>
+
+            <div class="status-indicator">
+                <span class="blinking-dot"></span> Online
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <div class="glass-card plugin-card" id="card-ita_equipment">
+                <h2>Balanza <span class="badge offline" id="badge-ita_equipment">Offline</span></h2>
+                <div class="card-content">
+                    <div class="live-data">
+                        <span class="weight-value" id="weight-display">0.000</span>
+                        <span class="unit">kg</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-toggle" onclick="togglePlugin('ita_equipment', 'stop')">Detener</button>
+                    <button class="btn btn-toggle active" onclick="togglePlugin('ita_equipment', 'start')">Iniciar</button>
+                </div>
+            </div>
+
+            <div class="glass-card plugin-card" id="card-escpos_driver">
+                <h2>Ticketera <span class="badge offline" id="badge-escpos_driver">Offline</span></h2>
+                <div class="card-content">
+                    <div class="printer-illustration">
+                        🖨️
+                    </div>
+                    <p class="printer-status" id="printer-status-text">Impresora Fiscal USB</p>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-toggle" onclick="togglePlugin('escpos_driver', 'stop')">Detener</button>
+                    <button class="btn btn-toggle active" onclick="togglePlugin('escpos_driver', 'start')">Iniciar</button>
+                </div>
+            </div>
+            
+            <div class="glass-card log-card">
+                <h2>Registros del Sistema</h2>
+                <div class="log-viewer" id="log-viewer">
+                    <p class="log-entry info">[System] Arrancando AzurIoT Web UI...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
