@@ -44,6 +44,24 @@ async function fetchWeight() {
     }
 }
 
+async function fetchScanner() {
+    try {
+        const res = await fetch('/hw_proxy/scanner_read');
+        const data = await res.json();
+        const display = document.getElementById('scanner-display');
+        if (!display) return;
+        
+        if (data.status === 'ok' || data.status === 'active') {
+            display.textContent = data.last_scan || "-------";
+        } else {
+            display.textContent = "---";
+        }
+    } catch (e) {
+        const display = document.getElementById('scanner-display');
+        if (display) display.textContent = "ERR";
+    }
+}
+
 async function togglePlugin(name, action) {
     addLog(`Solicitando ${action} para plugin ${name}...`, 'info');
     try {
@@ -54,9 +72,14 @@ async function togglePlugin(name, action) {
         });
         const data = await res.json();
         if(data.success) {
-            addLog(`Ejecución exitosa: ${action} en ${name}`, 'success');
+            // Show error styling if the device is physically disconnected, despite successful driver start
+            if (data.message && data.message.includes('no conectado')) {
+                addLog(data.message, 'error');
+            } else {
+                addLog(data.message || `Ejecución exitosa: ${action} en ${name}`, 'success');
+            }
         } else {
-            addLog(`Fallo al ejecutar ${action} en ${name}`, 'error');
+            addLog(data.message || `Fallo al ejecutar ${action} en ${name}`, 'error');
         }
         fetchStatus();
     } catch(e) {
@@ -68,6 +91,7 @@ async function togglePlugin(name, action) {
 setInterval(() => {
     fetchStatus();
     fetchWeight();
+    fetchScanner();
 }, 1000);
 
 // Carga Inicial

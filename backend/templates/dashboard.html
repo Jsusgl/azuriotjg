@@ -55,6 +55,20 @@
                 </div>
             </div>
             
+            <div class="glass-card plugin-card" id="card-barcode_scanner">
+                <h2>Lector Óptico <span class="badge offline" id="badge-barcode_scanner">Offline</span></h2>
+                <div class="card-content">
+                    <div class="live-data">
+                        <span class="weight-value" id="scanner-display" style="font-size: 1.5rem; word-break: break-all;">-------</span>
+                        <span class="unit">código</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-toggle" onclick="togglePlugin('barcode_scanner', 'stop')">Detener</button>
+                    <button class="btn btn-toggle active" onclick="togglePlugin('barcode_scanner', 'start')">Iniciar</button>
+                </div>
+            </div>
+            
             <div class="glass-card log-card">
                 <h2>Registros del Sistema</h2>
                 <div class="log-viewer" id="log-viewer">

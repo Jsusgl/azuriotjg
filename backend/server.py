@@ -11,6 +11,7 @@ pm = PluginManager()
 # Automatically load plugins on startup
 pm.load_plugin('ita_equipment')
 pm.load_plugin('escpos_driver')
+pm.load_plugin('barcode_scanner')
 
 # --- FRONTEND ROUTES ---
 @app.route('/')
@@ -32,6 +33,13 @@ def scale_read():
     if scale:
         return jsonify(scale.read_weight())
     return jsonify({"weight": 0.0, "unit": "kg", "status": "plugin_missing"}), 500
+
+@app.route('/hw_proxy/scanner_read', methods=['GET'])
+def scanner_read():
+    scanner = pm.get_plugin('barcode_scanner')
+    if scanner:
+        return jsonify(scanner.read_scanner())
+    return jsonify({"last_scan": "", "status": "offline"}), 200
 
 @app.route('/hw_proxy/print_receipt', methods=['POST'])
 def print_receipt():
@@ -58,15 +66,32 @@ def api_get_plugins():
 def api_toggle_plugin():
     data = request.json
     name = data.get('name')
-    action = data.get('action') # 'start' or 'stop'
+    action = data.get('action')
     
     success = False
+    message = ""
+    
     if action == 'start':
         success = pm.load_plugin(name)
+        if success:
+            instance = pm.get_plugin(name)
+            if instance and hasattr(instance, 'get_status'):
+                st = instance.get_status()
+                # Check hardware status
+                if st.get('status') in ['error', 'offline']:
+                    message = "Driver activado, pero hardware no conectado físicamente. Buscando..."
+                else:
+                    message = f"Driver de {name} iniciado y conectado correctamente."
+            else:
+                message = f"Driver de {name} iniciado."
+        else:
+            message = "Error interno al iniciar el plugin."
+            
     elif action == 'stop':
         success = pm.unload_plugin(name)
+        message = f"Driver {name} detenido."
         
-    return jsonify({"success": success})
+    return jsonify({"success": success, "message": message})
 
 @app.route('/api/system', methods=['GET'])
 def api_system():
