@@ -4,6 +4,9 @@ import logging
 
 logger = logging.getLogger("EscposPrinter")
 
+PLUGIN_NAME = "Controlador Impresoras ESC/POS"
+PLUGIN_VERSION = "2.1.0"
+
 class PrinterDriver:
     def __init__(self):
         self.idVendor = None

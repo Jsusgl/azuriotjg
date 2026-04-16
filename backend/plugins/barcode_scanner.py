@@ -5,6 +5,9 @@ import keyboard
 
 logger = logging.getLogger("BarcodeScanner")
 
+PLUGIN_NAME = "Lector de Códigos de Barras (Universal)"
+PLUGIN_VERSION = "1.2.0"
+
 class BarcodeScannerDriver:
     def __init__(self):
         self.is_connected = False

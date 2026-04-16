@@ -23,9 +23,10 @@ async function renderPlugins() {
             const card = document.createElement('div');
             card.className = 'glass-card plugin-card';
             card.innerHTML = `
-                <h2>${p.name} <span class="badge ${badgeClass}">${status}</span></h2>
+                <h2>${p.human_name || p.name} <span class="badge ${badgeClass}">${status}</span></h2>
                 <div class="card-content" style="min-height: 80px;">
-                    <p style="color: var(--text-secondary)">Plugin del sistema</p>
+                    <p style="color: var(--text-secondary)">Módulo: <code>${p.name}.py</code></p>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.9em;">Versión: <strong>${p.version || 'Desconocida'}</strong></p>
                 </div>
                 <div class="card-actions">
                     <button class="btn btn-toggle" onclick="togglePlugin('${p.name}', 'stop')">Detener</button>

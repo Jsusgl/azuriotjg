@@ -6,6 +6,9 @@ from serial.tools import list_ports
 
 logger = logging.getLogger("ITAequipmentScale")
 
+PLUGIN_NAME = "Balanza Electrónica RS232"
+PLUGIN_VERSION = "0.9.5"
+
 class ScaleConnectionError(Exception):
     pass
 

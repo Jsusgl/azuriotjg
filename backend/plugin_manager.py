@@ -74,6 +74,18 @@ class PluginManager:
         with self.lock:
             for p in discovered:
                 instance = self.plugin_instances.get(p)
+                
+                p_module = self.plugins.get(p)
+                if not p_module:
+                    try:
+                        p_module = importlib.import_module(p)
+                        # We don't save it to self.plugins to avoid keeping it fully active if it wasn't loaded via load_plugin
+                    except Exception:
+                        pass
+                
+                human_name = getattr(p_module, 'PLUGIN_NAME', p.replace('_', ' ').title()) if p_module else p.replace('_', ' ').title()
+                version = getattr(p_module, 'PLUGIN_VERSION', '1.0.0') if p_module else '1.0.0'
+                
                 if instance:
                     # plugin is loaded/active
                     p_status = instance.get_status() if hasattr(instance, 'get_status') else "unknown"
@@ -84,6 +96,8 @@ class PluginManager:
                 
                 status.append({
                     "name": p,
+                    "human_name": human_name,
+                    "version": version,
                     "state": state,
                     "status_detail": p_status
                 })
